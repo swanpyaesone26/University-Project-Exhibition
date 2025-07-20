@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 
 class AuthController extends Controller
@@ -14,24 +15,34 @@ class AuthController extends Controller
     {
         $request->validate([
             'student_id' => 'required|unique:users',
+            'email'=> 'required|email|unique:users',
             'password' => 'required|confirmed',
         ]);
         $user = User::create([
             'student_id' => $request->student_id,
+            'email' => $request->email,
             'password_hash' => Hash::make($request->password),
         ]);
-        return response()->json(['message' => 'User registered']);
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+        ]);
     }
 
     public function login(Request $request)
     {
         $request->validate([
-            'student_id' => 'required',
+            'email' => 'required',
             'password' => 'required',
         ]);
-        $user = User::where('student_id',$request->student_id)->first();
-        if(! $user || !Hash::check($request->password,$user->password_hash)){
-            return response()->json(['message' => 'Invalid crendentials'], 401);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (! $user || ! Hash::check($request->password, $user->password_hash)) {
+            return response()->json(['message' => 'Invalid credentials'], 401);
         }
 
         $token = $user->createToken('api_token')->plainTextToken;

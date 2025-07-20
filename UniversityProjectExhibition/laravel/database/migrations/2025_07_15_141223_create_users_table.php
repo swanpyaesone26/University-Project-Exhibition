@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id('user_id');
             $table->unsignedBigInteger('student_id')->unique();
+            $table->string('email');
             $table->string('password_hash')->unique();
             $table->string('reset_token')->nullable();
             $table->timestamp('reset_token_expiry')->nullable();
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->timestamp('created_at')->useCurrent();
 
             $table->foreign('student_id')->references('student_id')->on('students')->onDelete('cascade');
+            $table->foreign('email')->references('email')->on('students')->onDelete('cascade');
         });
     }
 
