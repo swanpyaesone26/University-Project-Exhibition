@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id('student_id');
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('image')->nullable();
             $table->string('major');
             $table->string('batch');
             $table->timestamps();
