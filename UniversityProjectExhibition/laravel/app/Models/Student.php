@@ -17,4 +17,10 @@ class Student extends Model
     {
         return $this->hasOne(Registration::class,'student_id');
     }
+
+    protected $fillable = ['name', 'email','image', 'major', 'batch'];
+    protected $primaryKey = 'student_id';
+    public $incrementing = true;
+    protected $keyType = 'int';
+
 }

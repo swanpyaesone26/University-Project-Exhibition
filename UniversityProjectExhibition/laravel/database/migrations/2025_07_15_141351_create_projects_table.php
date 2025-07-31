@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('project_image')->nullable();
             $table->string('collaborators')->nullable();
             $table->integer('popularity')->default(0);
+            $table->boolean('liked')->default(false);
             $table->timestamp('created_at')->useCurrent();
 
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');

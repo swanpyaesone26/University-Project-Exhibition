@@ -1,4 +1,8 @@
 <?php
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\StudentController;
+use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\RegistrationController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,3 +30,17 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/logout',[AuthController::class,'logout']);
 
 });
+
+//Api route for student
+Route::apiResource('students', StudentController::class);
+
+//Api route for user
+Route::apiResource('users', UserController::class);
+
+//Api route for project
+Route::apiResource('projects', ProjectController::class);
+
+//Api route for registrations
+Route::apiResource('registrations', RegistrationController::class);
+
+

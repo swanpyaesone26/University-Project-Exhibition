@@ -15,7 +15,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'student_id' => 'required|unique:users',
-            'email'=> 'required|email|unique:users',
+            'email' => 'required|unique:users',
             'password' => 'required|confirmed',
         ]);
         $user = User::create([
@@ -27,9 +27,11 @@ class AuthController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
+            'message' => 'User registered',
             'access_token' => $token,
             'token_type' => 'Bearer',
         ]);
+        // return response()->json(['message' => 'User registered']);
     }
 
     public function login(Request $request)
@@ -38,16 +40,15 @@ class AuthController extends Controller
             'email' => 'required',
             'password' => 'required',
         ]);
-
-        $user = User::where('email', $request->email)->first();
-
-        if (! $user || ! Hash::check($request->password, $user->password_hash)) {
-            return response()->json(['message' => 'Invalid credentials'], 401);
+        $user = User::where('email',$request->email)->first();
+        if(! $user || !Hash::check($request->password,$user->password_hash)){
+            return response()->json(['message' => 'Invalid crendentials'], 401);
         }
 
         $token = $user->createToken('api_token')->plainTextToken;
 
         return response()->json([
+            'message' => 'User logged in',
             'access_token' => $token,
             'token_type' => 'Bearer',
         ]);
