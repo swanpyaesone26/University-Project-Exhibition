@@ -20,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'email',
         'student_id',
+        'uni_id',
         'password_hash',
     ];
 
@@ -57,10 +58,10 @@ class User extends Authenticatable
         return $this->hasMany(Project::class, 'user_id');
     }
 
-    public function collaborators()
-    {
-        return $this->hasMany(Collaborator::class);
-    }
+    // public function collaborators()
+    // {
+    //     return $this->hasMany(Collaborator::class);
+    // }
 
     //to off laravel atomatic timestamps 
     public $timestamps = false;

@@ -29,11 +29,13 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'student_id' => 'required|exists:students,student_id|unique:users,student_id',
+            'uni_id' => 'required|exists:students,uni_id|unique:users,uni_id',
             'email' => 'required|exists:students,email',
             'password' => 'required|min:6',
         ]);
         $user = User::create([
             'student_id' => $validated['student_id'],
+            'uni_id' => $validated['uni_id'],
             'email' => $validated['email'],
             'password_hash' => Hash::make($validated['password']),
         ]);

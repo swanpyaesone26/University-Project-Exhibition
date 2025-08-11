@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -13,15 +14,26 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'student_id' => 'required|unique:users',
-            'email' => 'required|unique:users',
+            'uni_id' => 'required|unique:users,uni_id',
+            // 'student_id' => 'required|unique:users',
+            'email' => 'required|unique:users,email',
             'password' => 'required|confirmed',
         ]);
+            // Find the student by uni_id
+        $student = Student::where('uni_id', $request->uni_id)->firstOrFail();
+
         $user = User::create([
-            'student_id' => $request->student_id,
+            'student_id' => $student->student_id,   // link to student
+            'uni_id' => $student->uni_id,   // store uni_id also
             'email' => $request->email,
             'password_hash' => Hash::make($request->password),
         ]);
+        
+        // $user = User::create([
+        //     'uni_id' => $request->uni_id,
+        //     'email' => $request->email,
+        //     'password_hash' => Hash::make($request->password),
+        // ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
 

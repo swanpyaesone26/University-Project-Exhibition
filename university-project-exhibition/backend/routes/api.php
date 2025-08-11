@@ -5,6 +5,7 @@ use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\API\RegistrationController;
 use App\Http\Controllers\API\CollaboratorController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CollaboratorProjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -46,6 +47,12 @@ Route::apiResource('registrations', RegistrationController::class);
 
 //Api route for collaborators
 Route::apiResource('collaborators', CollaboratorController::class);
+
+////Api route for collaboratorsprojet
+Route::post('/collaborator-project', [CollaboratorProjectController::class, 'store']);
+Route::delete('/collaborator-project/{project}/{collaborator}', [CollaboratorProjectController::class, 'destroy']);
+Route::get('/project/{project}/collaborators', [CollaboratorProjectController::class, 'collaboratorsByProject']);
+Route::get('/collaborator/{collaborator}/projects', [CollaboratorProjectController::class, 'projectsByCollaborator']);
 
 
 

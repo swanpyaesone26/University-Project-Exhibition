@@ -28,4 +28,10 @@ class Project extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function collaborators()
+    {
+        return $this->belongsToMany(Collaborator::class, 'collaborator_project','project_id','collaborator_id');
+    }
+
 }

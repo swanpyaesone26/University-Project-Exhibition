@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('collaborators', function (Blueprint $table) {
-            $table->id('collaborator_id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('major')->nullable();
-            $table->string('batch')->nullable();
-            $table->string('image')->nullable();
+        Schema::create('collaborator_project', function (Blueprint $table) {
+            $table->id('cp_id');
+            $table->foreignId('project_id')->constrained('projects', 'project_id')->onDelete('cascade');
+            $table->foreignId('collaborator_id')->constrained('collaborators', 'collaborator_id')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('collaborators');
+        Schema::dropIfExists('collaborator_project');
     }
 };
