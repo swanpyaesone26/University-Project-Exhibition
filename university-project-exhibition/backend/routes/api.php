@@ -6,6 +6,7 @@ use App\Http\Controllers\API\RegistrationController;
 use App\Http\Controllers\API\CollaboratorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CollaboratorProjectController;
+use App\Http\Controllers\StudentBulkController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -53,6 +54,6 @@ Route::post('/collaborator-project', [CollaboratorProjectController::class, 'sto
 Route::delete('/collaborator-project/{project}/{collaborator}', [CollaboratorProjectController::class, 'destroy']);
 Route::get('/project/{project}/collaborators', [CollaboratorProjectController::class, 'collaboratorsByProject']);
 Route::get('/collaborator/{collaborator}/projects', [CollaboratorProjectController::class, 'projectsByCollaborator']);
-
+Route::post('/students/bulk', [StudentBulkController::class, 'storeMany']);
 
 
