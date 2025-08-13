@@ -41,6 +41,7 @@ class AuthController extends Controller
             'message' => 'User registered',
             'access_token' => $token,
             'token_type' => 'Bearer',
+            'user' => $user
         ]);
         // return response()->json(['message' => 'User registered']);
     }
@@ -62,6 +63,7 @@ class AuthController extends Controller
             'message' => 'User logged in',
             'access_token' => $token,
             'token_type' => 'Bearer',
+            'user' => $user
         ]);
     }
 
