@@ -24,8 +24,11 @@ The application uses PHPUnit for testing within the Laravel framework. Tests are
 │       ├── ProjectTest.php
 │       └── StudentTest.php
 ├── CreatesApplication.php
+├── README.md
 └── TestCase.php
 ```
+
+Note: The default Laravel example tests have been removed.
 
 ## Running Tests
 
