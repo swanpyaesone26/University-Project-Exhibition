@@ -15,7 +15,8 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return Project::with('users')->get();
+        return Project::all();
+        // return Project::with('users')->get();
     }
 
     /**
@@ -56,7 +57,8 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        return Project::with('users')->findOrFail($id);
+        return Project::findorFail($id);
+        // return Project::with('users')->findOrFail($id);
     }
 
     /**

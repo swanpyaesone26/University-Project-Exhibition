@@ -10,7 +10,8 @@ class CollaboratorController extends Controller
 {
     public function index()
     {
-        return Collaborator::with('projects')->get();
+        return Collaborator::all();
+        // return Collaborator::with('projects')->get();
     }
 
     public function store(Request $request)
@@ -28,7 +29,8 @@ class CollaboratorController extends Controller
 
     public function show($id)
     {
-        return Collaborator::with('projects')->findOrFail($id);
+        return Collaborator::findOrFail($id);
+        // return Collaborator::with('projects')->findOrFail($id);
     }
 
     public function update(Request $request, $id)

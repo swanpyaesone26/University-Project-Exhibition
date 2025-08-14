@@ -44,14 +44,16 @@ class CollaboratorProjectController extends Controller
     // Get all collaborators of a project
     public function collaboratorsByProject($projectId)
     {
-        $project = Project::with('collaborators')->findOrFail($projectId);
+        $project = Project::findOrFail($projectId);
+        // $project = Project::with('collaborators')->findOrFail($projectId);
         return response()->json($project->collaborators);
     }
 
     // Get all projects of a collaborator
     public function projectsByCollaborator($collaboratorId)
     {
-        $collaborator = Collaborator::with('projects')->findOrFail($collaboratorId);
+        $collaborator = Collaborator::findOrFail($collaboratorId);
+        // $collaborator = Collaborator::with('projects')->findOrFail($collaboratorId);
         return response()->json($collaborator->projects);
     }
 }
