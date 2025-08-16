@@ -21,6 +21,8 @@ services:
       - DB_DATABASE=university_projects
       - DB_USERNAME=root
       - DB_PASSWORD=root
+      - SCOUT_DRIVER=meilisearch
+      - MEILISEARCH_HOST=http://meilisearch:7700
     depends_on:
       database:
         condition: service_healthy
@@ -41,3 +43,12 @@ services:
       timeout: 5s
       retries: 5
     command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+  meilisearch:
+    image: getmeili/meilisearch:latest
+    volumes:
+      - ./docker/meili_data:/meili_data
+    ports:
+      - "7700:7700"   # Meilisearch runs at localhost:7700
+    environment:
+      - MEILI_ENV=development
+      - MEILI_NO_ANALYTICS=true

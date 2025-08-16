@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Registration extends Model
 {
@@ -26,5 +27,15 @@ class Registration extends Model
     public function students()
     {
         return $this->belongsTo(Student::class, 'student_id');
+    }
+
+    use Searchable;
+    public function toSearchableArray()
+    {
+        return [
+        'student_id'=>$this->student_id,
+        'email'=>$this->email,
+        'purpose'=>$this->purpose
+        ];
     }
 }

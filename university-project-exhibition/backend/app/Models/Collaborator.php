@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Collaborator extends Model
 {
@@ -23,4 +24,16 @@ class Collaborator extends Model
 
     //to off laravel atomatic timestamps 
     public $timestamps = false;
+
+    use Searchable;
+    public function toSearchableArray()
+    {
+        return [
+            'user_id'=>$this->user_id,
+            'name'=>$this->name,
+            'email'=>$this->email,
+            'major'=>$this->major,
+            'batch'=>$this->batch
+        ];
+    }
 }

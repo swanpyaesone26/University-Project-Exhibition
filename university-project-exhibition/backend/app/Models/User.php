@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Scout\Searchable;
 
 class User extends Authenticatable
 {
@@ -65,4 +66,14 @@ class User extends Authenticatable
 
     //to off laravel atomatic timestamps 
     public $timestamps = false;
+
+    use Searchable;
+    public function toSearchableArray()
+    {
+        return [
+        'email' => $this->email,
+        'student_id' => $this->student_id,
+        'uni_id' => $this->uni_id
+        ];
+    }
 }

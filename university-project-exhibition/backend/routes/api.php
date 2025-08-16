@@ -7,6 +7,7 @@ use App\Http\Controllers\API\CollaboratorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CollaboratorProjectController;
 use App\Http\Controllers\StudentBulkController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -55,5 +56,14 @@ Route::delete('/collaborator-project/{project}/{collaborator}', [CollaboratorPro
 Route::get('/project/{project}/collaborators', [CollaboratorProjectController::class, 'collaboratorsByProject']);
 Route::get('/collaborator/{collaborator}/projects', [CollaboratorProjectController::class, 'projectsByCollaborator']);
 Route::post('/students/bulk', [StudentBulkController::class, 'storeMany']);
+Route::get('/search', [SearchController::class, 'search']);
+Route::get('/search/students', [SearchController::class, 'searchStudents']);
+Route::get('/search/users', [SearchController::class, 'searchUsers']);
+Route::get('/search/projects', [SearchController::class, 'searchProjects']);
+Route::get('/search/registrations', [SearchController::class, 'searchRegistrations']);
+Route::get('/search/collaborators', [SearchController::class, 'searchCollaborators']);
+
+
+
 
 
