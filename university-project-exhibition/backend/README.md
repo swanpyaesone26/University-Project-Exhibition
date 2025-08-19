@@ -1,66 +1,307 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# University Project Exhibition API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This RESTful API is designed to manage university project exhibitions, allowing students to showcase their work, collaborate with others, and register their projects for events.
 
-## About Laravel
+## Getting Started
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Prerequisites
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- PHP 8.0 or higher
+- Composer
+- MySQL/MariaDB
+- Docker & Docker Compose (optional)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Installation
 
-## Learning Laravel
+1. Clone the repository:
+   ```
+   git clone <repository_url>
+   cd university-project-exhibition/backend
+   ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. Install dependencies:
+   ```
+   composer install
+   ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+3. Set up environment variables:
+   ```
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+4. Configure the database in `.env`:
+   ```
+   DB_CONNECTION=mysql
+   DB_HOST=database
+   DB_PORT=3306
+   DB_DATABASE=your_database_name_here
+   DB_USERNAME=your_database_username_here
+   DB_PASSWORD=your_database_password_here
+   ```
 
-## Laravel Sponsors
+5. Run migrations:
+   ```
+   php artisan migrate
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+6. Start the server:
+   ```
+   php artisan serve
+   ```
 
-### Premium Partners
+### Using Docker
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Simply run:
+```
+docker-compose up -d
+```
 
-## Contributing
+## API Documentation
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Authentication
 
-## Code of Conduct
+All authenticated endpoints require a Bearer token which can be obtained through the login endpoint.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+#### Register
+```
+POST /api/register
+```
+Request body:
+```json
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password",
+  "password_confirmation": "password",
+  "student_id": 1
+}
+```
 
-## Security Vulnerabilities
+#### Login
+```
+POST /api/login
+```
+Request body:
+```json
+{
+  "email": "john@example.com",
+  "password": "password"
+}
+```
+Response:
+```json
+{
+  "user": {
+    "user_id": 1,
+    "name": "John Doe",
+    "email": "john@example.com",
+    "student_id": 1
+  },
+  "token": "your_auth_token"
+}
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+#### Logout
+```
+POST /api/logout
+```
+Headers:
+```
+Authorization: Bearer your_auth_token
+```
+
+### Students API
+
+#### List all students
+```
+GET /api/students
+```
+
+#### Get a specific student
+```
+GET /api/students/{id}
+```
+
+#### Create a student
+```
+POST /api/students
+```
+Request body:
+```json
+{
+  "uni_id": "UNI123456",
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "image": "path/to/image.jpg", 
+  "major": "Computer Science",
+  "batch": "2025"
+}
+```
+
+#### Update a student
+```
+PUT /api/students/{id}
+```
+
+#### Delete a student
+```
+DELETE /api/students/{id}
+```
+
+#### Import Students in Bulk
+```
+POST /api/students/bulk
+```
+Request body:
+```json
+{
+  "students": [
+    {
+      "uni_id": "UNI123456",
+      "name": "Jane Doe",
+      "email": "jane@example.com",
+      "major": "Computer Science",
+      "batch": "2025"
+    },
+    {
+      "uni_id": "UNI123457",
+      "name": "John Smith",
+      "email": "john@example.com",
+      "major": "Data Science",
+      "batch": "2025"
+    }
+  ]
+}
+```
+
+### Projects API
+
+#### List all projects
+```
+GET /api/projects
+```
+
+#### Get a specific project
+```
+GET /api/projects/{id}
+```
+
+#### Create a project
+```
+POST /api/projects
+```
+Request body:
+```json
+{
+  "user_id": 1,
+  "project_name": "AI Chatbot",
+  "project_detail": "An AI-powered chatbot for customer service",
+  "project_date": "2025-08-15",
+  "project_link": "https://github.com/example/project",
+  "project_image": "path/to/image.jpg"
+}
+```
+
+#### Update a project
+```
+PUT /api/projects/{id}
+```
+
+#### Delete a project
+```
+DELETE /api/projects/{id}
+```
+
+### Collaborators API
+
+#### List all collaborators
+```
+GET /api/collaborators
+```
+
+#### Get a specific collaborator
+```
+GET /api/collaborators/{id}
+```
+
+#### Create a collaborator
+```
+POST /api/collaborators
+```
+
+#### Update a collaborator
+```
+PUT /api/collaborators/{id}
+```
+
+#### Delete a collaborator
+```
+DELETE /api/collaborators/{id}
+```
+
+### Collaborator-Project Relationship API
+
+#### Add a collaborator to a project
+```
+POST /api/collaborator-project
+```
+Request body:
+```json
+{
+  "project_id": 1,
+  "collaborator_id": 2
+}
+```
+
+#### Remove a collaborator from a project
+```
+DELETE /api/collaborator-project/{project_id}/{collaborator_id}
+```
+
+#### Get all collaborators for a project
+```
+GET /api/project/{project_id}/collaborators
+```
+
+#### Get all projects for a collaborator
+```
+GET /api/collaborator/{collaborator_id}/projects
+```
+
+### Data Models
+
+#### Student
+- `student_id`: int (Primary Key)
+- `uni_id`: string
+- `name`: string
+- `email`: string
+- `image`: string (nullable)
+- `major`: string
+- `batch`: string
+
+#### User
+- `user_id`: int (Primary Key)
+- `name`: string
+- `email`: string
+- `student_id`: int (Foreign Key to Students)
+- `password`: string (hashed)
+
+#### Project
+- `project_id`: int (Primary Key)
+- `user_id`: int (Foreign Key to Users)
+- `project_name`: string
+- `project_detail`: text
+- `project_date`: date
+- `project_link`: string
+- `project_image`: string
+- `popularity`: integer
+- `liked`: boolean
+
+#### Collaborator
+- `collaborator_id`: int (Primary Key)
+- Various fields related to collaborators
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License.
