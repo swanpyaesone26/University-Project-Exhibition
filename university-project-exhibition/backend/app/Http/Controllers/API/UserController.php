@@ -17,36 +17,37 @@ class UserController extends Controller
     public function index()
     {
         // return User::all();
-        // $users = User::with('students')->get();
-        $users = User::with([
-            'students' => function($query) {
-                $query->select('student_id', 'name', 'image', 'major', 'batch');
-            }
-        ])->get();
+        return $users = User::with('students')->get();
+
+        // $users = User::with([
+        //     'students' => function($query) {
+        //         $query->select('student_id', 'name', 'image', 'major', 'batch');
+        //     }
+        // ])->get();
 
         // return $users;
 
-        $flatusers = $users->map(function ($user){
-            return [
-                'user_id' => $user->user_id,
-                'student_id' => $user->student_id,
-                'uni_id' => $user->uni_id,
-                'name' => $user->students->name,
-                'email' => $user->email,
-                'image' => $user->students->image,
-                'major' => $user->students->major,
-                'batch' => $user->students->batch,
-                'password_hash' => $user->password_hash,
-                'reset_token' => $user->reset_token,
-                'reset_token_expiry' => $user->reset_token_expiry,
-                'reset_token_used' => $user->reset_token_used,
-                'created_at' => $user->created_at
+        // $flatusers = $users->map(function ($user){
+        //     return [
+        //         'user_id' => $user->user_id,
+        //         'student_id' => $user->student_id,
+        //         'uni_id' => $user->uni_id,
+        //         'name' => $user->students->name,
+        //         'email' => $user->email,
+        //         'image' => $user->students->image,
+        //         'major' => $user->students->major,
+        //         'batch' => $user->students->batch,
+        //         'password_hash' => $user->password_hash,
+        //         'reset_token' => $user->reset_token,
+        //         'reset_token_expiry' => $user->reset_token_expiry,
+        //         'reset_token_used' => $user->reset_token_used,
+        //         'created_at' => $user->created_at
 
 
-            ];
-        });
+        //     ];
+        // });
 
-        return response()->json($flatusers);
+        // return response()->json($flatusers);
     }
 
     /**
@@ -82,34 +83,34 @@ class UserController extends Controller
     public function show($id)
     {
         // return User::findOrFail($id);
-        // return User::with('students')->findOrFail($id);
-        $users = User::with([
-            'students' => function($query) {
-                $query->select('student_id', 'name', 'image', 'major', 'batch');
-            }
-        ])->findOrFail($id);
+        return User::with('students')->findOrFail($id);
+        // $users = User::with([
+        //     'students' => function($query) {
+        //         $query->select('student_id', 'name', 'image', 'major', 'batch');
+        //     }
+        // ])->findOrFail($id);
 
         // return $users;
 
-        $flatusers =  [
-                'user_id' => $users->user_id,
-                'student_id' => $users->student_id,
-                'uni_id' => $users->uni_id,
-                'name' => $users->students->name,
-                'email' => $users->email,
-                'image' => $users->students->image,
-                'major' => $users->students->major,
-                'batch' => $users->students->batch,
-                'password_hash' => $users->password_hash,
-                'reset_token' => $users->reset_token,
-                'reset_token_expiry' => $users->reset_token_expiry,
-                'reset_token_used' => $users->reset_token_used,
-                'created_at' => $users->created_at
+        // $flatusers =  [
+        //         'user_id' => $users->user_id,
+        //         'student_id' => $users->student_id,
+        //         'uni_id' => $users->uni_id,
+        //         'name' => $users->students->name,
+        //         'email' => $users->email,
+        //         'image' => $users->students->image,
+        //         'major' => $users->students->major,
+        //         'batch' => $users->students->batch,
+        //         'password_hash' => $users->password_hash,
+        //         'reset_token' => $users->reset_token,
+        //         'reset_token_expiry' => $users->reset_token_expiry,
+        //         'reset_token_used' => $users->reset_token_used,
+        //         'created_at' => $users->created_at
 
 
-            ];
+        //     ];
 
-        return response()->json($flatusers);
+        // return response()->json($flatusers);
     }
     
 

@@ -12,13 +12,17 @@ class Project extends Model
     protected $primaryKey = 'project_id';
     public $timestamps = false;
 
+    protected $casts = [
+        'project_images' => 'array',
+    ];
+
     protected $fillable = [
         'user_id',
         'project_name',
         'project_detail',
         'project_date',
         'project_link',
-        'project_image',
+        'project_images',
         'popularity',
         'liked',
     ];

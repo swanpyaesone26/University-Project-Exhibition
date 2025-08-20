@@ -58,14 +58,17 @@ class SearchController extends Controller
             return response()->json(['message' => 'No search query provided'], 400);
         }
         
-        $results = User::search($query)->get();
+        $users = User::search($query)->get();
+        $users->load(['students','projects']);
         
-        if ($results->isEmpty()){
+        if ($users->isEmpty()){
             return response()->json('No search found');
         }
 
         return response()->json([
-            'students' => User::search($query)->get(),
+            // 'users' => User::search($query)->get(),
+            'users' => $users,
+    
             
         ]);
 
@@ -86,7 +89,7 @@ class SearchController extends Controller
         }
 
         return response()->json([
-            'students' => Project::search($query)->get(),
+            'projects' => Project::search($query)->get(),
             
         ]);
 
