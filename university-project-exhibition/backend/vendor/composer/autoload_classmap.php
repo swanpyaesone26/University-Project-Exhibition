@@ -14,7 +14,6 @@ return array(
     'App\\Http\\Controllers\\API\\StudentController' => $baseDir . '/app/Http/Controllers/API/StudentController.php',
     'App\\Http\\Controllers\\API\\UserController' => $baseDir . '/app/Http/Controllers/API/UserController.php',
     'App\\Http\\Controllers\\AuthController' => $baseDir . '/app/Http/Controllers/AuthController.php',
-    'App\\Http\\Controllers\\CollaboratorProjectController' => $baseDir . '/app/Http/Controllers/CollaboratorProjectController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\SearchController' => $baseDir . '/app/Http/Controllers/SearchController.php',
     'App\\Http\\Controllers\\StudentBulkController' => $baseDir . '/app/Http/Controllers/StudentBulkController.php',

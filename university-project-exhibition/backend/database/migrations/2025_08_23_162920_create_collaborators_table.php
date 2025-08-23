@@ -15,12 +15,16 @@ return new class extends Migration
     {
         Schema::create('collaborators', function (Blueprint $table) {
             $table->id('collaborator_id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('major')->nullable();
-            $table->string('batch')->nullable();
-            $table->string('image')->nullable();
+            $table->unsignedBigInteger('project_id');
+            $table->unsignedBigInteger('user_id');
+            $table->string('role')->nullable();
             $table->timestamps();
+
+            $table->foreign('project_id')->references('project_id')->on('projects')->onDelete('cascade');
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
+
+            $table->unique(['project_id', 'user_id']); // prevents duplicate entries
+
         });
     }
 

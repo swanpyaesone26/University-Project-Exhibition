@@ -37,7 +37,7 @@ class SearchController extends Controller
             return response()->json(['message' => 'No search query provided'], 400);
         }
         
-        $results = Student::search($query)->get();
+        $users = Student::search($query)->get();
         
         if ($results->isEmpty()){
             return response()->json('No search found');

@@ -30,14 +30,16 @@ class Project extends Model
     use HasFactory;
     
     public function users()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
+{
+    return $this->belongsToMany(User::class, 'collaborators','project_id', 'user_id')
+                ->withPivot('role')
+                ->withTimestamps();
+}
 
-    public function collaborators()
-    {
-        return $this->belongsToMany(Collaborator::class, 'collaborator_project','project_id','collaborator_id');
-    }
+    // public function collaborators()
+    // {
+    //     return $this->belongsToMany(Collaborator::class, 'collaborator_project','project_id','collaborator_id');
+    // }
 
     use Searchable;
 

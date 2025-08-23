@@ -22,6 +22,10 @@ class AuthController extends Controller
             // Find the student by uni_id
         $student = Student::where('uni_id', $request->uni_id)->firstOrFail();
 
+        if (!$student) {
+            return response()->json(['message' => 'Student not found'], 404);
+        }
+
         $user = User::create([
             'student_id' => $student->student_id,   // link to student
             'uni_id' => $student->uni_id,   // store uni_id also

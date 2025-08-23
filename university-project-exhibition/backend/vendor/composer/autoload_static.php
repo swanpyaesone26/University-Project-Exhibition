@@ -566,7 +566,6 @@ class ComposerStaticInitfe33f98a750b8c5a51b30c78bd3fab21
         'App\\Http\\Controllers\\API\\StudentController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/StudentController.php',
         'App\\Http\\Controllers\\API\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/UserController.php',
         'App\\Http\\Controllers\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/AuthController.php',
-        'App\\Http\\Controllers\\CollaboratorProjectController' => __DIR__ . '/../..' . '/app/Http/Controllers/CollaboratorProjectController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\SearchController' => __DIR__ . '/../..' . '/app/Http/Controllers/SearchController.php',
         'App\\Http\\Controllers\\StudentBulkController' => __DIR__ . '/../..' . '/app/Http/Controllers/StudentBulkController.php',

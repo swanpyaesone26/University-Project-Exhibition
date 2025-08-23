@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CollaboratorProjectController;
 use App\Http\Controllers\StudentBulkController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\ProjectCreateController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -62,6 +63,10 @@ Route::get('/search/users', [SearchController::class, 'searchUsers']);
 Route::get('/search/projects', [SearchController::class, 'searchProjects']);
 Route::get('/search/registrations', [SearchController::class, 'searchRegistrations']);
 Route::get('/search/collaborators', [SearchController::class, 'searchCollaborators']);
+
+//For creating project
+Route::post('/createproject', [ProjectCreateController::class, 'store']);
+Route::apiResource('getprojects', ProjectCreateController::class);
 
 
 
