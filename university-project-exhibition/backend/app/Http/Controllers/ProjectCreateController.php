@@ -21,12 +21,14 @@ class ProjectCreateController extends Controller
             'project_detail' => 'nullable|string',
             'project_link' => 'nullable|string',
             'project_images' => 'nullable',
+            'liked' => 'nullable',
+            'popularity' => 'nullable',
             'user_id' => 'required|exists:users,user_id',   // project owner
             'collaborators' => 'array',
             'collaborators.*.user_id' => 'required|exists:users,user_id',
         ]);
 
-        $data = $request->only(['project_name', 'project_detail', 'project_link', 'project_images']);
+        $data = $request->only(['project_name', 'project_detail', 'project_link', 'project_images','liked','popularity']);
 
         $data['user_id'] = $validated['user_id'];  // add this line
 
