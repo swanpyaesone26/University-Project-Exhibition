@@ -13,7 +13,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return Project::with('users')->get();
+        return Project::with(['users','users.students'])->get();
     }
 
     /**
@@ -70,7 +70,7 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        $project = Project::with('users')->findOrFail($id);
+        $project = Project::with(['users','users.students'])->findOrFail($id);
         return response()->json($project);
     }
 
