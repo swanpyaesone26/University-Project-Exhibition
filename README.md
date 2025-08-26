@@ -22,8 +22,8 @@ This platform is intended to serve as a valuable academic resource and a communi
 ## 🛠️ Tech Stack
 
 - **Frontend:** HTML, CSS, JavaScript
-- **Backend:** Python (Django)
-- **Database:** PostgreSQL
+- **Backend:** PHP (Laravel)
+- **Database:** MySQL
 - **UI/UX Design:** Figma (or another design tool)
 - **Security:** User authentication, input validation, secure data handling
 
