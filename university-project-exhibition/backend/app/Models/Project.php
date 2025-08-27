@@ -47,7 +47,9 @@ class Project extends Model
     {
         return [
             'user_id'=>$this->user_id,
-            'project_name'=>$this->project_name
+            'project_name'=>$this->project_name,
+            'project_detail' => $this->project_detail,
+            'project_name_no_space' => preg_replace('/\s+/', '', strtolower($this->project_name)),
         ];
     }
 

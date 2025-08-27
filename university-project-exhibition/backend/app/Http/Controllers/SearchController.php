@@ -32,23 +32,31 @@ class SearchController extends Controller
     public function searchStudents(Request $request)
     {
         $query = trim($request->input('q'));
+        $batch = $request->input('batchq');
 
-        if (!$query) {
+        if (!$query && !$batch) {
             return response()->json(['message' => 'No search query provided'], 400);
         }
-        
-        $users = Student::search($query)->get();
-        
-        if ($results->isEmpty()){
-            return response()->json('No search found');
+
+        // Start search with query (if any)
+        $builder = Student::search($query ?? '');
+
+        // Apply batch filter if provided
+        if ($batch) {
+            $builder->where('batch', $batch);
+        }
+
+        $students = $builder->get();
+
+        if ($students->isEmpty()) {
+            return response()->json(['message' => 'No search found']);
         }
 
         return response()->json([
-            'students' => Student::search($query)->get(),
-            
+            'students' => $students,
         ]);
-
     }
+
 
     public function searchUsers(Request $request)
     {
@@ -59,7 +67,7 @@ class SearchController extends Controller
         }
         
         $users = User::search($query)->get();
-        $users->load(['students','projects']);
+        $users->load('students');
         
         if ($users->isEmpty()){
             return response()->json('No search found');
@@ -83,13 +91,14 @@ class SearchController extends Controller
         }
         
         $results = Project::search($query)->get();
+        $results->load(['users','users.students']);
         
         if ($results->isEmpty()){
             return response()->json('No search found');
         }
 
         return response()->json([
-            'projects' => Project::search($query)->get(),
+            'projects' => $results
             
         ]);
 
@@ -110,8 +119,7 @@ class SearchController extends Controller
         }
 
         return response()->json([
-            'students' => Registration::search($query)->get(),
-            
+            'students' => $results,
         ]);
 
     }
@@ -131,7 +139,7 @@ class SearchController extends Controller
         }
 
         return response()->json([
-            'students' => Collaborator::search($query)->get(),
+            'students' => $results,
             
         ]);
 

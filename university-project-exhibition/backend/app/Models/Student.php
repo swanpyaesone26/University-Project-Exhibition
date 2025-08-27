@@ -19,7 +19,7 @@ class Student extends Model
         return $this->hasOne(Registration::class,'student_id');
     }
 
-    protected $fillable = ['uni_id','name', 'email','image', 'major', 'batch'];
+    protected $fillable = ['uni_id','name','name_no_space', 'email','image', 'major', 'batch'];
     protected $primaryKey = 'student_id';
     public $incrementing = true;
     protected $keyType = 'int';
@@ -31,6 +31,7 @@ class Student extends Model
         return [
             'uni_id' => $this->uni_id,
             'name' => $this->name,
+            'name_no_space' => strtolower(str_replace(' ', '', $this->name)),
             'email' => $this->email,
             'major' => $this->major,
             'batch' => $this->batch

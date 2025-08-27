@@ -10,6 +10,7 @@ use App\Http\Controllers\StudentBulkController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Meilisearch\Client;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,4 +65,23 @@ Route::get('/search/registrations', [SearchController::class, 'searchRegistratio
 Route::get('/search/collaborators', [SearchController::class, 'searchCollaborators']);
 
 
+Route::get('/setup-student-search', function () {
+    $client = new Client(env('MEILISEARCH_HOST'));
+    $client->index('students')->updateSettings([
+        'searchableAttributes' => ['name', 'name_no_space', 'email', 'major', 'batch'],
+        'filterableAttributes' => ['batch'],
+        'typoTolerance' => ['enabled' => true],
+    ]);
+    return 'Student search settings updated!';
+});
+
+Route::get('/setup-project-search', function () {
+    $client = new Client(env('MEILISEARCH_HOST'));
+    $client->index('projects')->updateSettings([
+        'searchableAttributes' => ['project_name', 'project_name_no_space', 'project_detail'],
+        'typoTolerance' => ['enabled' => true],
+    ]);
+
+    return response()->json(['message' => 'Project search settings updated!']);
+});
 
