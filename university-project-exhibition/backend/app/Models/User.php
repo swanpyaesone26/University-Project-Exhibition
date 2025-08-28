@@ -72,10 +72,19 @@ class User extends Authenticatable
     use Searchable;
     public function toSearchableArray()
     {
-        return [
-        'email' => $this->email,
-        'student_id' => $this->student_id,
-        'uni_id' => $this->uni_id
+        $array = [
+            'email' => $this->email,
+            'student_id' => $this->student_id,
+            'uni_id' => $this->uni_id
         ];
+
+        // Include student information if available
+        if ($this->students) {
+            $array['name'] = $this->students->name;
+            $array['major'] = $this->students->major;
+            $array['batch'] = $this->students->batch;
+        }
+
+        return $array;
     }
 }
