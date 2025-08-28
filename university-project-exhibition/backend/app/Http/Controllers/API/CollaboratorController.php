@@ -10,39 +10,60 @@ class CollaboratorController extends Controller
 {
     public function index()
     {
-        return Collaborator::all();
-        // return Collaborator::with('projects')->get();
+        return Collaborator::with(['projects', 'users'])->get();
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:collaborators',
-            'major' => 'required',
-            'batch' => 'required',
-            'image' => 'nullable|string'
+            'project_id' => 'required|exists:projects,id',
+            'user_id' => 'required|exists:users,id',
+            'role' => 'nullable|string'
         ]);
 
-        return Collaborator::create($validated);
+        $collaborator = Collaborator::create($validated);
+
+        return response()->json($collaborator, 201);
     }
 
     public function show($id)
     {
-        return Collaborator::findOrFail($id);
-        // return Collaborator::with('projects')->findOrFail($id);
+        $collaborator = Collaborator::with(['projects', 'users'])->find($id);
+
+        if (!$collaborator) {
+            return response()->json(['message' => 'Not found'], 404);
+        }
+
+        return response()->json($collaborator);
     }
 
     public function update(Request $request, $id)
     {
-        $collaborator = Collaborator::findOrFail($id);
-        $collaborator->update($request->all());
-        return $collaborator;
+        $collaborator = Collaborator::find($id);
+
+        if (!$collaborator) {
+            return response()->json(['message' => 'Not found'], 404);
+        }
+
+        $validated = $request->validate([
+            'role' => 'nullable|string'
+        ]);
+
+        $collaborator->update($validated);
+
+        return response()->json($collaborator);
     }
 
     public function destroy($id)
     {
-        Collaborator::findOrFail($id)->delete();
-        return response()->json(['message' => 'Collaborator Deleted successfully']);
+        $collaborator = Collaborator::find($id);
+
+        if (!$collaborator) {
+            return response()->json(['message' => 'Not found'], 404);
+        }
+
+        $collaborator->delete();
+
+        return response()->json(['message' => 'Deleted successfully']);
     }
 }

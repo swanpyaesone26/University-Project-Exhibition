@@ -21,10 +21,12 @@ This platform is intended to serve as a valuable academic resource and a communi
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** HTML, CSS, JavaScript
-- **Backend:** Python (Django)
-- **Database:** PostgreSQL
-- **UI/UX Design:** Figma (or another design tool)
+- **Frontend:** Vue.JS
+- **Backend:** PHP (Laravel)
+- **Server:** Apache
+- **Database:** MySQL
+- **UI/UX:** Figma
+- **DevOps:** Docker
 - **Security:** User authentication, input validation, secure data handling
 
 ---
@@ -46,10 +48,10 @@ This platform is intended to serve as a valuable academic resource and a communi
 
 ## 🧪 Project Context
 
-This is a **final group project** for the **third-year Web Development** and **ICT Project Management** courses at MIT. It integrates both technical development and practical project management skills, preparing students for real-world web application deployment.
+This is a **final group project** for the **Third-year Web Development** and **ICT Project Management** courses at MIT. It integrates both technical development and practical project management skills, preparing students for real-world web application deployment.
 
 ---
 
 ## 🤝 Contributions
 
-Since this is a class project, external contributions are not accepted at this stage. However, feedback and suggestions are welcome!
+Thanks to all the team members for the big contribution in this project. 

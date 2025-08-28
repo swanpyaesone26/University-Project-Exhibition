@@ -12,13 +12,17 @@ class Project extends Model
     protected $primaryKey = 'project_id';
     public $timestamps = false;
 
+    protected $casts = [
+        'project_images' => 'array',
+    ];
+
     protected $fillable = [
         'user_id',
         'project_name',
         'project_detail',
         'project_date',
         'project_link',
-        'project_image',
+        'project_images',
         'popularity',
         'liked',
     ];
@@ -26,13 +30,17 @@ class Project extends Model
     use HasFactory;
     
     public function users()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
+{
+    return $this->belongsToMany(User::class, 'collaborators','project_id', 'user_id')
+                ->withPivot('role')
+                ->withTimestamps();
+}
 
     public function collaborators()
     {
-        return $this->belongsToMany(Collaborator::class, 'collaborator_project','project_id','collaborator_id');
+        return $this->belongsToMany(User::class, 'collaborators', 'project_id', 'user_id')
+                    ->withPivot('role')
+                    ->withTimestamps();
     }
 
     use Searchable;
@@ -41,7 +49,9 @@ class Project extends Model
     {
         return [
             'user_id'=>$this->user_id,
-            'project_name'=>$this->project_name
+            'project_name'=>$this->project_name,
+            'project_detail' => $this->project_detail,
+            'project_name_no_space' => preg_replace('/\s+/', '', strtolower($this->project_name)),
         ];
     }
 

@@ -11,15 +11,16 @@ class Collaborator extends Model
     protected $primaryKey = 'collaborator_id';
     
     use HasFactory;
-    protected $fillable = ['user_id','name', 'email', 'major', 'batch', 'image'];
+    protected $fillable = ['project_id', 'user_id', 'role'];
 
-    // public function user()
-    // {
-    //     return $this->belongsTo(User::class);
-    // }
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function projects()
     {
-        return $this->belongsToMany(Project::class, 'collaborator_project','collaborator_id', 'project_id');
+        return $this->belongsTo(Project::class);
     }
 
     //to off laravel atomatic timestamps 

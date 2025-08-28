@@ -16,20 +16,28 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'uni_id' => 'required',
-            'name' => 'sometimes|required',
-            'email' => 'sometimes|required|email|unique:students',
-            'major' => 'sometimes|required',
-            'batch' => 'sometimes|required',
-            'image' => 'nullable'
+            'uni_id' => 'required|integer|unique:students,uni_id',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:students,email',
+            'major' => 'required|string|max:255',
+            'batch' => 'required|string|max:255',
+            'image' => 'nullable|string'
         ]);
+
+        // Handle name_no_space field
+        $validated['name_no_space'] = strtolower(str_replace(' ', '', $validated['name']));
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('images', 'public');
-            $validated['image']= $path;
+            $validated['image'] = $path;
         }
 
-        return Student::create($validated);
+        $student = Student::create($validated);
+        
+        return response()->json([
+            'message' => 'Student created successfully',
+            'student' => $student
+        ], 201);
     }
 
     public function show($id)
@@ -46,7 +54,8 @@ class StudentController extends Controller
 
     public function destroy($id)
     {
-        return Student::destroy($id);
-        return response()->json(['message' => 'Student deleted']);
+        $student = Student::findOrFail($id);
+        $student->delete();
+        return response()->json(['message' => 'Student deleted successfully']);
     }
 }
